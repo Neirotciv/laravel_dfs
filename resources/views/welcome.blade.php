@@ -9,16 +9,18 @@
 </head>
 <body>
     <h1>Bienvenue</h1>
-    @foreach ($products as $product)
-        <div class="card ">
-            <h1>{{ $product->name }}</h1>
-            <p class="text-ellipsis">
-                {{ $product->description }}
-            </p>
+    <div class="flex flex-wrap">
+        @foreach ($products as $product)
+            <div class="bg-slate-100 w-96 h-48 m-10 flex flex-col items-center">
+                <h1 class="font-bold">{{ $product->name }}</h1>
+                <p>
+                    {{ $product->description }}
+                </p>
             <p>
-                {{ $product->category->name }}
+               catégorie : {{ $product->category->name }}
             </p>
-        </div>
-    @endforeach
+            </div>
+        @endforeach
+    </div>
 </body>
 </html>
