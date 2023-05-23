@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name', 100);
             $table->text('description');
             $table->float('price');
-            $table->foreignId('type_id');
+            $table->foreignId('category_id');
             $table->timestamps();
         });
     }
