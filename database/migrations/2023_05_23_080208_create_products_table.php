@@ -16,8 +16,11 @@ return new class extends Migration
             $table->string('name', 100);
             $table->text('description');
             $table->float('price');
-            $table->foreignId('category_id');
             $table->timestamps();
+        });
+
+        Schema::table('products', function (Blueprint $table) {
+            $table->foreignId('category_id')->references('id')->on('categories');
         });
     }
 
