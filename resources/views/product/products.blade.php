@@ -1,5 +1,7 @@
 <x-layout>
-    <div class="container mx-auto flex flex-wrap">
+    <x-categories :categories="$categories" />
+    
+    <div id="products" class="flex flex-wrap">
         @foreach ($products as $product)
             <x-product-card :product="$product" />
         @endforeach

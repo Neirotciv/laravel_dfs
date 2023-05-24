@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -38,5 +39,15 @@ class Product extends Model
     public function getSlugAttribute(): string
     {
         return Str::slug($this->name);
+    }
+
+    /**
+     * Get name with ucfirst
+     */
+    public function name(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => ucfirst($value)
+        );
     }
 }

@@ -1,5 +1,5 @@
 <x-layout>
-    <form method="POST" action="{{ route('register') }}" class="w-full mx-4 md:w-1/3 md:mx-auto flex flex-col bg-white p-8 rounded-xl drop-shadow-md">
+    <form method="POST" action="{{ route('register') }}" class="mx-4 mt-8 flex flex-col bg-white p-8 rounded-xl drop-shadow-md lg:mx-auto lg:w-1/3">
         <fieldset>
             <legend class="text-xl underline">Inscription</legend>
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />
@@ -32,7 +32,7 @@
         </fieldset>
     </form>
 
-    <form method="POST" action="{{ route('login') }}" class="w-full mx-4 md:w-1/3 mx-auto flex flex-col bg-white p-8 mt-8 rounded-xl drop-shadow-md">
+    <form method="POST" action="{{ route('login') }}" class="mx-4 flex flex-col bg-white p-8 mt-8 rounded-xl drop-shadow-md lg:mx-auto lg:w-1/3">
         <fieldset>
             <legend class="text-xl underline">Connexion</legend>
             <input type="hidden" name="_token" value="{{ csrf_token() }}" />

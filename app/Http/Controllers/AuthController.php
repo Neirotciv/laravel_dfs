@@ -22,7 +22,13 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+            'email' => "Les informations d'identification fournies ne correspondent pas à nos enregistrements.",
         ])->onlyInput('email');
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+        return redirect('/')->with('success', 'Vous êtes deconnecté.');
     }
 }

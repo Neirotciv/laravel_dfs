@@ -9,9 +9,9 @@
     <title>Document</title>
 </head>
 <body class="bg-slate-100">
-    <header class="flex justify-between items-center sticky top-0">
+    <header class="bg-slate-100 px-10 drop-shadow-md flex justify-between items-center sticky top-0 lg:bg-transparent lg:drop-shadow-none">
         <a href="/">
-            <span class="material-symbols-outlined text-4xl m-4">home</span>
+            <span class="material-symbols-outlined text-4xl m-4 hover:text-slate-400">home</span>
         </a>
         
         @if (session()->has('success'))
@@ -20,14 +20,29 @@
             </div>
         @endif
 
-        <div id="user-actions">
-            <span class="material-symbols-outlined text-4xl m-4">shopping_cart</span>
-            <a href="{{ route('register') }}">
-                <span class="material-symbols-outlined text-4xl my-4 mr-4">account_circle</span>
-            </a>
+        <div id="user-actions" class="flex">
+            <span class="material-symbols-outlined text-4xl m-4 hover:text-slate-400">
+                shopping_cart
+            </span>
+            @auth
+            <a href="{{ route('dashboard') }}" class="flex flex-col items-center mr-4">
+                <span class="material-symbols-outlined text-4xl mx-4 mt-4 hover:text-slate-400">
+                    account_circle
+                </span>
+                <span>{{ auth()->user()->name }}</span>
+            </a>    
+            @endauth
+            @guest
+                <a href="{{ route('register') }}">
+                    <span class="material-symbols-outlined text-4xl mx-4 my-4 hover:text-slate-400">
+                        account_circle
+                    </span>
+                </a>
+            @endguest
         </div>
     </header>
-    
-    {{ $slot }}
+    <div class="container mx-auto">
+        {{ $slot }}
+    <div>
 </body>
 </html>
