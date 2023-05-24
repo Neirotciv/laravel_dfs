@@ -3,6 +3,7 @@
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,16 +17,16 @@ use App\Http\Controllers\CategoryController;
 */
 
 Route::get('/', function () {
-
     $products = Product::all();
+    $categories = Category::all();
 
-    return view('welcome', [
-        'products' => $products
+    return view('product.products', [
+        'products' => $products,
+        'categories' => $categories
     ]);
 });
 
-Route::prefix('categories')->name('categories')->group(function () {
-    Route::get('/', 'App\Http\Controllers\CategoryController@getAll');
-    
-    Route::get('/{id}', [CategoryController::class, 'get']);
+Route::prefix('/categories')->controller(CategoryController::class)->name('categories')->group(function () {
+    Route::get('/', 'getAll');
+    Route::get('/{id}', 'getById');
 });

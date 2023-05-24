@@ -13,9 +13,9 @@ class CategoryController extends Controller
         return view('category.categories', ['categories' => $categories]);
     }
 
-    public function get(int $id)
+    public function getById(int $id)
     {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
         dd($category->product);
     }
 }
