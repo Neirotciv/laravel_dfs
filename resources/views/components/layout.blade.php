@@ -21,9 +21,17 @@
         @endif
 
         <div id="user-actions" class="flex">
-            <span class="material-symbols-outlined text-4xl m-4 hover:text-slate-400">
-                shopping_cart
-            </span>
+            <div class="">
+                <a href="{{ route('cart') }}">
+                    <span class="material-symbols-outlined text-4xl m-4 hover:text-slate-400">
+                        shopping_cart
+                    </span>
+                </a>
+                @if (session()->has('product_count'))
+                    <span class="absolute top-0">{{ session()->get('product_count')}}</span>
+                @endif
+            </div>
+
 
             @auth
             <a href="{{ route('dashboard') }}" class="flex flex-col items-center mr-4">

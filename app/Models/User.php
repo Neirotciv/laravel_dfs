@@ -55,4 +55,14 @@ class User extends Authenticatable
             set: fn (string $value) => bcrypt($value)
         );
     }
+
+    public function orderProducts()
+    {
+        return $this->hasMany(OrderProduct::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
