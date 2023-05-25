@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GithubController;
 use App\Http\Controllers\RegisterController;
 
 /*
@@ -41,12 +42,17 @@ Route::prefix('/register')->controller(RegisterController::class)->name('registe
 
 Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/redirect', [AuthController::class, 'redirectToProvider'])->name('redirect')->middleware('guest');
+Route::get('/callback', [AuthController::class, 'handleProviderCallback']);
 
 Route::prefix('/dashboard')->middleware('auth')->group(function () {
-    Route::get('/', function () { return view('dashboard.index'); })->name('dashboard');
+    Route::get('/', function () {
+        return view('dashboard.index');
+    })->name('dashboard');
 });
 
 Route::get('/order/add/{id}', [OrderController::class, 'addItem'])->middleware('auth');
+
 Route::get('/cart', function () {
     $user = auth()->user();
     $orders = $user->orders;
@@ -61,3 +67,9 @@ Route::get('/cart', function () {
 
     return view('cart.index', ['orders_products' => $orders_products]);
 })->middleware('auth')->name('cart');
+
+
+Route::prefix('/github')->name('github.')->controller(GithubController::class)->group(function () {
+    Route::get('/redirect', 'redirectToProvider')->name('register')->middleware('guest');
+    Route::get('/callback', 'handleProviderCallback');
+});
