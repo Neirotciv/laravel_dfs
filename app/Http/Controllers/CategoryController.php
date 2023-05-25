@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\View\View;
 
 class CategoryController extends Controller
@@ -17,7 +18,13 @@ class CategoryController extends Controller
 
     public function getById(int $id)
     {
-        $category = Category::findOrFail($id);
-        dd($category->product);
+        $category = Category::find($id);
+        $categories = Category::all();
+        $products = $category->products()->get();
+        
+        return view('product.products', [
+            'products' => $products,
+            'categories' => $categories
+        ]);
     }
 }

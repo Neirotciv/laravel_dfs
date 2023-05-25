@@ -4,6 +4,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\RegisterController;
 
@@ -28,7 +29,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::prefix('/categories')->controller(CategoryController::class)->name('categories')->middleware('auth')->group(function () {
+Route::prefix('/categories')->controller(CategoryController::class)->name('categories')->group(function () {
     Route::get('/', 'getAll');
     Route::get('/{id}', 'getById');
 });
@@ -44,3 +45,5 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::prefix('/dashboard')->middleware('auth')->group(function () {
     Route::get('/', function () { return view('dashboard.index'); })->name('dashboard');
 });
+
+Route::get('/order/add/{id}', [OrderController::class, 'addItem'])->middleware('auth');

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->uuid('order_number');
+            $table->boolean('paid');
         });
     }
 

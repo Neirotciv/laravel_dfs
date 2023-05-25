@@ -24,6 +24,7 @@
             <span class="material-symbols-outlined text-4xl m-4 hover:text-slate-400">
                 shopping_cart
             </span>
+
             @auth
             <a href="{{ route('dashboard') }}" class="flex flex-col items-center mr-4">
                 <span class="material-symbols-outlined text-4xl mx-4 mt-4 hover:text-slate-400">
@@ -32,6 +33,7 @@
                 <span>{{ auth()->user()->name }}</span>
             </a>    
             @endauth
+            
             @guest
                 <a href="{{ route('register') }}">
                     <span class="material-symbols-outlined text-4xl mx-4 my-4 hover:text-slate-400">

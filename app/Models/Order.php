@@ -10,6 +10,17 @@ class Order extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'user_id',
+        'order_number',
+        'paid',
+    ];
+
       /**
      * Get the products that owns the order.
      */
