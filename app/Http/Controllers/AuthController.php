@@ -56,7 +56,7 @@ class AuthController extends Controller
             $newUser = new User;
             $newUser->name = $user->name;
             $newUser->email = $user->email;
-            $newUser->google_id = $user->id;
+            $newUser->service_id = $user->id;
             $newUser->password = Str::uuid()->toString();
             $newUser->save();
             auth()->login($newUser, true);

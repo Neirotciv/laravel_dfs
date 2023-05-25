@@ -30,6 +30,10 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/rgpd', function () {
+    return view('rgpd');
+})->name('rgpd');
+
 Route::prefix('/categories')->controller(CategoryController::class)->name('categories')->group(function () {
     Route::get('/', 'getAll');
     Route::get('/{id}', 'getById');
