@@ -24,8 +24,8 @@ class Order extends Model
       /**
      * Get the products that owns the order.
      */
-    public function product(): HasMany
+    public function products(): HasMany
     {
-        return $this->hasMany(Category::class);
+        return $this->hasMany(OrderProduct::class);
     }
 }

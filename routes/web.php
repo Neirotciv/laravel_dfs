@@ -47,3 +47,17 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
 });
 
 Route::get('/order/add/{id}', [OrderController::class, 'addItem'])->middleware('auth');
+Route::get('/cart', function () {
+    $user = auth()->user();
+    $orders = $user->orders;
+    
+    $orders_products = [];
+    foreach($orders as $order) {
+        $orders_products[] = [
+            'order' => $order,
+            'products' => $order->products
+        ];
+    }
+
+    return view('cart.index', ['orders_products' => $orders_products]);
+})->middleware('auth')->name('cart');
