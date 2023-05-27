@@ -15,8 +15,8 @@ class CategoryController extends Controller
      * and all categories to provide them to the view.
      *
      * @param int $id The id of the category to retrieve.
-     * @return View A view that contains the specific category, its associated products and all categories.
      * @throws ModelNotFoundException If no category with the provided id exists.
+     * @return View A view that contains the specific category, its associated products and all categories.
      */
     public function show(int $id): View
     {

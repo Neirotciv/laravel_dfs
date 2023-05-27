@@ -30,7 +30,6 @@ Route::get('/', function () {
     ]);
 });
 
-
 Route::get('/rgpd', function () {
     return view('rgpd');
 })->name('rgpd');
@@ -55,23 +54,10 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
     })->name('dashboard');
 });
 
-Route::get('/order/add/{id}', [OrderController::class, 'addItem'])->middleware('auth');
-
-Route::get('/cart', function () {
-    $user = auth()->user();
-    $orders = $user->orders;
-    
-    $orders_products = [];
-    foreach($orders as $order) {
-        $orders_products[] = [
-            'order' => $order,
-            'products' => $order->products
-        ];
-    }
-
-    return view('cart.index', ['orders_products' => $orders_products]);
-})->middleware('auth')->name('cart');
-
+Route::prefix('order')->controller(OrderController::class)->name('order.')->group(function () {
+    Route::get('/show', 'index')->name('show')->middleware('auth');
+    Route::get('/add/{id}', 'addItem')->middleware('auth');
+});
 
 Route::prefix('/github')->name('github.')->controller(GithubController::class)->group(function () {
     Route::get('/redirect', 'redirectToProvider')->name('register')->middleware('guest');

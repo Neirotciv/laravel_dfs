@@ -6,12 +6,27 @@ use App\Models\User;
 use App\Models\Order;
 use Ramsey\Uuid\Uuid;
 use App\Models\Product;
+use Illuminate\View\View;
 use App\Models\OrderProduct;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class OrderController extends Controller
 {
+    /**
+     * Show orders with their products.
+     *
+     * @return View To show the orders.
+     */
+    public function index(): View
+    {
+        $user = auth()->user();
+        $orders = $user->orders;
+        
+        return view('cart.index', ['orders' => $orders]);
+    }
+    
+
     /**
      * Creates a new order for the specified user.
      *
