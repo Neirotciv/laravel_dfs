@@ -5,7 +5,7 @@
             <li class="mx-8">Toutes</li>
         </a>
         @foreach ($categories as $category)
-            <a href="/categories/{{ $category->id }}" class="rounded-md hover:bg-slate-400 hover:text-white">
+            <a href="{{ route('categories.show', ['id' => $category->id]) }}" class="rounded-md hover:bg-slate-400 hover:text-white">
                 <li class="mx-8">{{ $category->name }}</li>
             </a>
         @endforeach

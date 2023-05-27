@@ -21,8 +21,9 @@ class Order extends Model
         'paid',
     ];
 
-      /**
+    /**
      * Get the products that owns the order.
+     * 
      */
     public function products(): HasMany
     {

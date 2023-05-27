@@ -7,12 +7,18 @@ use App\Models\Order;
 use Ramsey\Uuid\Uuid;
 use App\Models\Product;
 use App\Models\OrderProduct;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    public function create($user): int
+    /**
+     * Creates a new order for the specified user.
+     *
+     * @param User $user The user for whom to create the order.
+     * @return Order The newly created order.
+     */
+    public function create($user): Order
     {
         $order = new Order([
             'user_id' => $user->id,
@@ -24,12 +30,27 @@ class OrderController extends Controller
         return $order;
     }
 
-    public function getUnpaidOrder(User $user)
+
+    /**
+     * Retrieves the first unpaid order for the specified user.
+     *
+     * @param User $user The user whose unpaid order is to be retrieved.
+     * @return Order|null The unpaid order, or null if no unpaid order exists.
+     */
+    public function getUnpaidOrder(User $user): Order|null
     {
         return $user->orders()->firstWhere('paid', false);
     }
 
-    public function addItem(Request $request, int $id)
+
+    /**
+     * Adds an item to a user's order.
+     *
+     * @param Request $request The Request object containing the details of the HTTP request.
+     * @param int $id The ID of the product to add to the order.
+     * @return \Illuminate\Http\RedirectResponse A redirect response to the homepage with a success message.
+     */
+    public function addItem(Request $request, int $id): RedirectResponse
     {
         $user = auth()->user();
         $product =  Product::find($id);

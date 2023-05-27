@@ -27,7 +27,7 @@ class GithubController extends Controller
         } else {
             // create a new user
             $newUser = new User;
-            $newUser->name = $user->name;
+            $newUser->name = $user->name ?? $user->nickname;
             $newUser->email = $user->email;
             $newUser->service_id = $user->id;
             $newUser->password = Str::uuid()->toString();

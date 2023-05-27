@@ -30,13 +30,13 @@ Route::get('/', function () {
     ]);
 });
 
+
 Route::get('/rgpd', function () {
     return view('rgpd');
 })->name('rgpd');
 
-Route::prefix('/categories')->controller(CategoryController::class)->name('categories')->group(function () {
-    Route::get('/', 'getAll');
-    Route::get('/{id}', 'getById');
+Route::prefix('/categories')->controller(CategoryController::class)->name('categories.')->group(function () {
+    Route::get('/{id}', 'show')->name('show');
 });
 
 Route::prefix('/register')->controller(RegisterController::class)->name('register')->group(function () {
