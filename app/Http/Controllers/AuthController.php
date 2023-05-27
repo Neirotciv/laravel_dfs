@@ -12,6 +12,12 @@ use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
+    /**
+     * Attempts to log in a user with the given credentials.
+     *
+     * @param Request $request The Request object containing the user's login credentials.
+     * @return RedirectResponse A redirect response to the homepage on successful login, or back to the login page with errors on failure.
+     */
     public function login(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
@@ -30,29 +36,48 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    public function logout()
+
+    /**
+     * Logs out the currently authenticated user.
+     *
+     * @return RedirectResponse A redirect response to the homepage with a success message.
+     */
+    public function logout(): RedirectResponse
     {
         auth()->logout();
         return redirect('/')->with('success', 'Vous êtes deconnecté.');
     }
 
-    public function redirectToProvider()
+
+    /**
+     * Redirects the user to the OAuth provider (Google) for authentication.
+     *
+     * @return RedirectResponse A redirect response to the Google OAuth service.
+     */
+    public function redirectToProvider(): RedirectResponse
     {
         return Socialite::driver('google')->redirect();
     }
 
-    public function handleProviderCallback()
+
+    /**
+     * Handles the OAuth callback from the provider (Google). If the user exists, logs them in; otherwise, creates and logs in a new user.
+     *
+     * @return RedirectResponse A redirect response to the homepage.
+     */
+    public function handleProviderCallback(): RedirectResponse
     {
         try {
             $user = Socialite::driver('google')->user();
         } catch (\Exception $e) {
             return redirect('/');
         }
+
         $existingUser = User::where('email', $user->email)->first();
+
         if ($existingUser) {
             auth()->login($existingUser, true);
         } else {
-            // create a new user
             $newUser = new User;
             $newUser->name = $user->name;
             $newUser->email = $user->email;
@@ -61,6 +86,7 @@ class AuthController extends Controller
             $newUser->save();
             auth()->login($newUser, true);
         }
+        
         return redirect()->to('/');
     }
 }

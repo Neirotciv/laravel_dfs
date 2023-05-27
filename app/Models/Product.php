@@ -6,8 +6,10 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Product extends Model
 {
@@ -49,5 +51,25 @@ class Product extends Model
         return Attribute::make(
             get: fn (string $value) => ucfirst($value)
         );
+    }
+
+    /**
+     * Define a one-to-many relationship with OrderProduct.
+     *
+     * @return HasMany
+     */
+    public function orderProduct(): HasMany
+    {
+        return $this->hasMany(orderProduct::class);
+    }
+    
+    /**
+     * Define a many-to-many relationship with Order through the order_products pivot table.
+     *
+     * @return BelongsToMany
+     */
+    public function orders(): BelongsToMany
+    {
+        return $this->belongsToMany(Order::class, 'order_products');
     }
 }

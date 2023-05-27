@@ -14,27 +14,27 @@
 
 <body class="bg-slate-100">
     <header
-        class="bg-slate-100 px-10 drop-shadow-md flex justify-between items-center sticky top-0 lg:bg-transparent lg:drop-shadow-none">
+        class="sticky top-0 flex items-center justify-between px-10 bg-slate-100 drop-shadow-md lg:bg-transparent lg:drop-shadow-none">
         <a href="/">
-            <span class="material-symbols-outlined text-4xl m-4 hover:text-slate-400">home</span>
+            <span class="m-4 text-4xl material-symbols-outlined hover:text-slate-400">home</span>
         </a>
 
         @if (session()->has('success'))
-            <div class="bg-slate-400 text-white px-10 py-2 rounded-xl">
+            <div class="px-10 py-2 text-white bg-slate-400 rounded-xl">
                 <p>{{ session()->get('success') }}</p>
             </div>
         @endif
 
         <div id="user-actions" class="flex">
             <a href="{{ route('rgpd') }}" target="_blank" rel="noopener noreferrer">
-                <span class="material-symbols-outlined text-4xl m-4 hover:text-slate-400">
+                <span class="m-4 text-4xl material-symbols-outlined hover:text-slate-400">
                     description
                 </span>
             </a>
 
             <div class="">
-                <a href="{{ route('cart') }}">
-                    <span class="material-symbols-outlined text-4xl m-4 hover:text-slate-400">
+                <a href="{{ route('order.show') }}">
+                    <span class="m-4 text-4xl material-symbols-outlined hover:text-slate-400">
                         shopping_cart
                     </span>
                 </a>
@@ -43,10 +43,9 @@
                 @endif
             </div>
 
-
             @auth
                 <a href="{{ route('dashboard') }}" class="flex flex-col items-center mr-4">
-                    <span class="material-symbols-outlined text-4xl mx-4 mt-4 hover:text-slate-400">
+                    <span class="mx-4 mt-4 text-4xl material-symbols-outlined hover:text-slate-400">
                         account_circle
                     </span>
                     <span class="hidden md:inline">{{ auth()->user()->name }}</span>
@@ -55,7 +54,7 @@
 
             @guest
                 <a href="{{ route('register') }}">
-                    <span class="material-symbols-outlined text-4xl mx-4 my-4 hover:text-slate-400">
+                    <span class="mx-4 my-4 text-4xl material-symbols-outlined hover:text-slate-400">
                         account_circle
                     </span>
                 </a>

@@ -9,16 +9,18 @@ use Illuminate\View\View;
 
 class CategoryController extends Controller
 {
-
-    public function getAll(): View
+    /**
+     * The Show method retrieves a specific category based on the provided id,
+     * retrieves all products associated with that category,
+     * and all categories to provide them to the view.
+     *
+     * @param int $id The id of the category to retrieve.
+     * @throws ModelNotFoundException If no category with the provided id exists.
+     * @return View A view that contains the specific category, its associated products and all categories.
+     */
+    public function show(int $id): View
     {
-        $categories = Category::all();
-        return view('category.categories', ['categories' => $categories]);
-    }
-
-    public function getById(int $id)
-    {
-        $category = Category::find($id);
+        $category = Category::findOrFail($id);
         $categories = Category::all();
         $products = $category->products()->get();
         

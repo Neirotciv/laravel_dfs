@@ -34,9 +34,8 @@ Route::get('/rgpd', function () {
     return view('rgpd');
 })->name('rgpd');
 
-Route::prefix('/categories')->controller(CategoryController::class)->name('categories')->group(function () {
-    Route::get('/', 'getAll');
-    Route::get('/{id}', 'getById');
+Route::prefix('/categories')->controller(CategoryController::class)->name('categories.')->group(function () {
+    Route::get('/{id}', 'show')->name('show');
 });
 
 Route::prefix('/register')->controller(RegisterController::class)->name('register')->group(function () {
@@ -55,23 +54,10 @@ Route::prefix('/dashboard')->middleware('auth')->group(function () {
     })->name('dashboard');
 });
 
-Route::get('/order/add/{id}', [OrderController::class, 'addItem'])->middleware('auth');
-
-Route::get('/cart', function () {
-    $user = auth()->user();
-    $orders = $user->orders;
-    
-    $orders_products = [];
-    foreach($orders as $order) {
-        $orders_products[] = [
-            'order' => $order,
-            'products' => $order->products
-        ];
-    }
-
-    return view('cart.index', ['orders_products' => $orders_products]);
-})->middleware('auth')->name('cart');
-
+Route::prefix('order')->controller(OrderController::class)->name('order.')->group(function () {
+    Route::get('/show', 'index')->name('show')->middleware('auth');
+    Route::get('/add/{id}', 'addItem')->middleware('auth');
+});
 
 Route::prefix('/github')->name('github.')->controller(GithubController::class)->group(function () {
     Route::get('/redirect', 'redirectToProvider')->name('register')->middleware('guest');
